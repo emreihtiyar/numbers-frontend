@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Numbers Game
 
-## Getting Started
+Sayıları belirli kurallara göre yerleştirerek en yüksek skoru elde etmeye çalıştığınız bir strateji oyunu.
 
-First, run the development server:
+## Oyun Kuralları
+
+1. Oyun 10x10'luk bir ızgarada oynanır
+2. Her hamle, bir önceki hamlenin konumuna göre şu kurallara uygun olmalıdır:
+   - Yatay veya dikey olarak 3 kare uzağa
+   - Çapraz olarak 2 kare uzağa
+3. Sayılar 1'den başlayarak sırayla yerleştirilir
+4. Bir kare seçildikten sonra tekrar seçilemez
+5. Sağ tık ile son hamlenizi geri alabilirsiniz:
+   - Son hamleden bir önceki hamleye kadar olan tüm hamleler silinir
+   - Birden fazla hamle geri alınacaksa onay gerekir
+
+## Geliştirme Ortamı
+
+### Normal Kurulum
+
+Öncelikle gerekli bağımlılıkları yükleyin:
+
+```bash
+npm install
+# veya
+yarn install
+# veya
+pnpm install
+```
+
+Geliştirme sunucusunu başlatın:
 
 ```bash
 npm run dev
-# or
+# veya
 yarn dev
-# or
+# veya
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[http://localhost:3000](http://localhost:3000) adresini tarayıcınızda açarak uygulamayı görebilirsiniz.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Docker ile Kurulum
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Ortam değişkenlerini ayarlayın:
+   ```bash
+   cp .env.example .env
+   ```
+   `.env` dosyasını kendi ortamınıza göre düzenleyin.
 
-## Learn More
+2. Docker konteynerini build edin ve başlatın:
+   ```bash
+   docker compose up --build
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. Uygulamaya [http://localhost:3000](http://localhost:3000) adresinden erişebilirsiniz.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Docker konteynerini durdurmak için:
+```bash
+docker compose down
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Teknolojiler
 
-## Deploy on Vercel
+- [Next.js](https://nextjs.org/) - React framework
+- [Tailwind CSS](https://tailwindcss.com/) - CSS framework
+- [TypeScript](https://www.typescriptlang.org/) - JavaScript with syntax for types
+- [Docker](https://www.docker.com/) - Konteynerizasyon
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Lisans
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
