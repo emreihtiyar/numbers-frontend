@@ -1,7 +1,7 @@
 # Stage 1: Dependencies
 FROM node:20-alpine AS deps
 # Add necessary security packages
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
 # Copy package files
@@ -14,6 +14,9 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Generate Prisma Client
+RUN npx prisma generate
 
 # Build the application
 ENV NEXT_TELEMETRY_DISABLED 1
@@ -36,6 +39,10 @@ COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+
+# Switch prisma folder and subfolders to non-root user
+RUN chown -R nextjs:nodejs ./prisma
 
 # Switch to non-root user
 USER nextjs

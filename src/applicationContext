@@ -1,0 +1,47 @@
+import { GameResultRepository, PaginatedResults } from '@/repositories/gameResultRepository';
+import type { PrismaClient } from '@prisma/client';
+
+export type GameResult = NonNullable<Awaited<ReturnType<PrismaClient['gameResult']['findUnique']>>>;
+
+interface CreateGameResultDTO {
+  username: string;
+  lastNumber: number;
+  time: string;
+}
+
+type UnknownGameResult = {
+  [K in keyof CreateGameResultDTO]: unknown;
+};
+
+export class GameResultService {
+  private repository: GameResultRepository;
+
+  constructor() {
+    this.repository = new GameResultRepository();
+  }
+
+  async createGameResult(data: CreateGameResultDTO): Promise<GameResult> {
+    return this.repository.create(data);
+  }
+
+  async getGameResults(page: number, size: number): Promise<PaginatedResults<GameResult>> {
+    return this.repository.findAll(page, size);
+  }
+
+  validateGameResult(data: unknown): data is CreateGameResultDTO {
+    const result = data as UnknownGameResult;
+    
+    return (
+      typeof data === 'object' &&
+      data !== null &&
+      typeof result.username === 'string' &&
+      result.username.length >= 3 &&
+      result.username.length <= 20 &&
+      typeof result.lastNumber === 'number' &&
+      result.lastNumber >= 0 &&
+      result.lastNumber <= 100 &&
+      typeof result.time === 'string' &&
+      /^\d{2}:\d{2}$/.test(result.time)
+    );
+  }
+} 

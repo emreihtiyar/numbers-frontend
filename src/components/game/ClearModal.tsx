@@ -16,8 +16,17 @@ export default function ClearModal({ isOpen, onConfirm, onCancel, time, maxNumbe
   
   if (!isOpen) return null;
 
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onCancel();
+    }
+  };
+
   return (
-    <div className={`fixed inset-0 backdrop-blur-sm ${COLORS.MODAL.BACKDROP} flex items-center justify-center z-50`}>
+    <div 
+      className={`fixed inset-0 backdrop-blur-sm ${COLORS.MODAL.BACKDROP} flex items-center justify-center z-50`}
+      onClick={handleBackdropClick}
+    >
       <div className={`p-6 rounded-lg border shadow-xl ${COLORS.MODAL.BG} ${COLORS.MODAL.BORDER}`}>
         <div className="mb-6 text-center">
           <div className="mb-4">

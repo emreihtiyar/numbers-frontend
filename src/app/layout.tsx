@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/common/navbar";
+import Navbar from "@/components/common/Navbar";
 import { LanguageProvider } from "@/lib/contexts/LanguageContext";
 import { GameProvider } from "@/lib/contexts/GameContext";
 import Script from "next/script";
